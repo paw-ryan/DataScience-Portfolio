@@ -1,0 +1,84 @@
+---
+title: "Wk4_Assignment"
+author: "Ryan Paw"
+date: "10/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE, paged.print=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+myDataLocation <- "/Users/RyanPaw/My Files/R/ANA605/wk_4"
+
+#SET WORKING DIRECTORY TO LOCATION OF DATA FILE
+setwd(myDataLocation)
+
+#IMPORT DATA AND PUT INTO DATAFRAME
+dat <- read.csv(file = "admission_data.csv", header = TRUE)
+
+# ========================
+library(supernova)
+library(mosaic)
+library(ggplot2)
+library(ggformula)
+```
+
+## Q1
+
+1.	For each of the following variables contained in the below table,
+    a.	Get the frequencies for each categorical variable and means/sd for each quantitative variable.
+
+Variables
+- Research Experience		
+- Undergraduate GPA		
+- Letter of Recommendation (LOR)		
+- Statement of Purpose (SOP)	
+
+b.	Get correlations (and p-values) between the outcome, chance of admit, and explanatory variable. Put those values in the table below, labeled r (p). 
+c.	Perform a multiple regression analysis for the outcome variable, chance of admit, and fill in the rest of the table below.
+
+
+```{r paged.print=FALSE}
+str(dat)
+#q1 a)
+tally(~ Research, dat)
+favstats(dat$CGPA)
+favstats(dat$LOR)
+favstats(dat$SOP)
+tally(~SOP, dat)
+```
+```{r paged.print=FALSE}
+#Q1 b
+dat$ResearchF <- factor(dat$Research, levels=c(0,1), c("No","Yes"))
+
+#Corr and P values
+cor.test(Chance.of.Admit~Research,data=dat,conf.level=.95)
+cor.test(Chance.of.Admit~CGPA,data=dat,conf.level=.95)
+cor.test(Chance.of.Admit~LOR,data=dat,conf.level=.95)
+cor.test(Chance.of.Admit~SOP,data=dat,conf.level=.95)
+```
+```{r paged.print=FALSE}
+multi.model <- lm(Chance.of.Admit ~ CGPA + SOP + LOR + Research, data=dat)
+multi.model
+summary(multi.model)
+supernova(multi.model)
+confint(multi.model)
+```
+
+```{r paged.print=FALSE}
+multi.model2 <- lm(Chance.of.Admit ~ CGPA + LOR + Research, data=dat)
+multi.model2
+summary(multi.model2)
+supernova(multi.model2)
+confint(multi.model2)
+```
+Extra Credit
+```{r paged.print=FALSE}
+q1 <- makeFun(multi.model)
+q1
+pred234 <- q1(dat[234,"CGPA"], dat[234, "LOR"], dat[234, "SOP"], dat[234, "Research"])
+pred234
+
+q2 <- resid(multi.model)
+q2[128]
+```

@@ -1,0 +1,198 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+Hello Everyone, we are going to do this Assignment together because it is...robust. 
+Let's start by setting up our Notebooks and loading our libraries.
+```{r}
+#load libraries
+library(mosaic)
+```
+Great! Now load the data
+```{r}
+dat <- read.csv(file = "sim_data.csv", header = TRUE)
+dim(dat) # rows = students, columns = samples
+```
+Question 1.	One Sample
+    a.	Plot a histogram of age for the first sample (the first column) of 100 students with a vertical line of the mean.
+    b.	Describe the shape of the distribution.
+    c.	What does the y-axis represent?
+    d.	What is the mean age for the sample?
+    e.	What is the standard deviation of age for the sample?
+
+```{r}
+#Q1 Answers
+#a
+oneSample <- dat[,1]
+hist(oneSample)
+abline(v=mean(oneSample))
+
+#b  
+#Normal distribution, right skewed
+
+#c  
+#Frequency of sample values (students) 
+
+#d 
+ybar <- mean(oneSample)
+ybar
+
+#e
+sd <- sd(oneSample)
+sd
+```
+2.	Calculate the mean ages for each sample, using the R function, apply(). You will need to figure out what values to put in for the three arguments, X, MARGIN, and FUN. Save the 1,000 means in a vector of age means.
+a.	Plot a histogram of the age means with a vertical line at the mean.
+b.	Describe the shape of the distribution.
+c.	What does the y-axis represent?
+d.	What is the mean of the sampling distribution of means?
+e.	What is the standard error of the mean?
+f.	What notation would you use to describe the mean and standard error from 2.d-e?
+```{r}
+#a - Make a SDoM
+#1 = rows, 2=columns
+sampleMeansQ2 <- apply(X = dat, MARGIN = 2, FUN=mean)
+hist(sampleMeansQ2)
+abline(v=mean(sampleMeansQ2), col ='red')
+
+#b - The shape of this distribution is normal.
+
+#c - The y-axis represents the frequency of the means.
+
+#d - 31.44
+mu_sub_ybar <- mean(sampleMeansQ2)
+favstats(sampleMeansQ2)
+  #option for favstats(sampleMeansQ2)
+#e - 
+sigma_sub_sd1 <- sd(sampleMeansQ2)
+sigma_sub_sd1
+#f -  Yi = b0 + b1 + ei   Yi = 31.44 + 1.25ei
+```
+3.	Calculate the standard deviation for each sample, using the R function, apply(). You will need to figure out what values to put in for the three arguments, X, MARGIN, and FUN. Save the result in vector of age standard deviations.
+a.	Plot a histogram of the age standard deviations with a vertical line at the mean.
+b.	Describe the shape of the distribution.
+c.	What does the y-axis represent?
+d.	What is the mean of the sampling distribution of the standard deviations?
+e.	What is the standard error of the standard deviations?
+f.	What notation would you use to describe the mean and standard error from 3.d-e?
+```{r}
+#a - Make a SDoSD (Sampling Distribution of Standard Deviations)
+sampleSD <- apply(X = dat, MARGIN = 2, FUN=sd)
+hist(sampleSD) %>%
+  abline(v = mean(sampleSD))
+#b
+#The shape of this distribution is normal.
+
+#c 
+#The y-axis represents the frequency of the means.
+
+#d - 3.99
+mu_sub_sd <- mean(sampleSD)
+mu_sub_sd
+#option for favstats(sampleSD)
+
+#e - 0.27
+sigma_sub_sd2 <- sd(sampleSD)
+sigma_sub_sd2
+  
+#f -  Yi = bo +  ei     Yi  = 3.99 + 0.28ei
+```
+4.	According to your findings from Q1-Q3, 
+a.	What is your best estimate of the population mean? Why?
+
+b.	What is your best estimate of the population standard deviation? Why?
+   
+```{r}
+#a
+bestMean <- mean(sampleMeansQ2)
+bestMean
+#31.4 because they come from the sampling distribution of means
+
+#b
+bestSD <- mean(sampleSD)
+bestSD
+#3.99 because they come from the sampling distribution of means
+
+```
+For the following questions, use your best estimates of the population mean and standard deviation (Q4). 
+
+5.	Simulate the sampling distribution of the mean with 100 samples of 10 students each. 
+a.	Plot a histogram of the age means with a vertical line at the mean.
+b.	What is the mean of the sampling distribution of the means?
+c.	What is the standard error of the mean?
+
+```{r}
+#a
+Q5 <- do(100) * rnorm(10, mean=bestMean, sd=bestSD)
+meansQ5 <- apply(X=Q5, MARGIN=1, FUN=mean)
+hist(meansQ5) %>%
+  abline(v = mean(meansQ5),col = 'Blue')
+
+#b - 31.39
+mean(meansQ5)
+
+#c - 1.29
+sd(meansQ5)
+
+```
+6.	Repeat the simulation in Q5, but instead of 100 samples, get 1,000 samples. 
+  a.	Plot a histogram of the age means with a vertical line at the mean.
+  b.	What is the mean of the sampling distribution of the means?
+  c.	What is the standard error of the mean?
+  d.	What happened to the standard error of the mean, compared to the simulation with 100 samples for 10 students in Q5? 
+  i.	Why do you believe this happened?
+```{r}
+#a
+Q6 <- do(1000) * rnorm(10, mean=bestMean, sd=bestSD)
+meansQ6 <- apply(X=Q6, MARGIN=1, FUN=mean)
+hist(meansQ6) %>%
+  abline(v = mean(meansQ6),col = 'Blue')
+
+#b - 31.50
+mean(meansQ6)
+
+#c - 1.28
+sd(meansQ6)
+
+#d
+#Our standard error of the mean slightly decreased with 1000 samples (1.28) compared to 100 samples (1.29)
+
+#i
+#This is because as the sample size increases, the sample means cluster more closely around the population mean. This shows that the standard error decreases with more samples. 
+```
+7.	Repeat the simulation in Q5, but instead of 10 students per sample, get 1,000 students. 
+a.	Plot a histogram of the age means with a vertical line at the mean.
+b.	What is the mean of the sampling distribution of the means?
+c.	What is the standard error of the mean?
+d.	What happened to the standard error of the mean, compared to the simulation with 100 samples for 10 students in Q5? 
+i.	Why do you believe this happened?
+e.	What happened to the standard error of the mean, compared to the simulation with 1,000 samples for 10 students in Q6? 
+i.	Why do you believe this happened?
+```{r}
+#a
+Q7 <- do(1000) * rnorm(1000, mean=bestMean, sd=bestSD)
+meansQ7 <- apply(X=Q7, MARGIN=1, FUN=mean)
+hist(meansQ7) %>%
+  abline(v = mean(meansQ7),col = 'Blue')
+
+#b - 31.43
+mean(meansQ7)
+
+#c - 0.12
+sd(meansQ7)
+
+#d
+#The standard error of the mean decreased compared with 100 samples for 10 students.
+
+#i
+#I believe this happened because as the sample size increases the sample means cluster more closely around the population mean, which makes the standard error of the mean decrease. 
+
+#e
+#The standard error of the mean decreased even more in comparison with 1000 samples for 10 students. 
+
+#i
+#Similar with 1000 samples, I believe this happened because as we increases the sample and the student size this will make more means cluster closely around the population mean, which makes the standard error of the mean decrease even more. 
+
+```
+End.
+

@@ -1,0 +1,92 @@
+---
+Author: "Ryan Paw"
+title: "Assignment 4"
+output: html_notebook
+---
+
+##Data Description
+This data was downloaded from Kaggle.com, a site that houses open source datasets. This specific dataset is titled: “Student Alcohol Consumption: Social, gender and study data from secondary school students.”
+
+Source Information
+P. Cortez and A. Silva. Using Data Mining to Predict Secondary School Student Performance. In A. Brito and J. Teixeira Eds., Proceedings of 5th FUture BUsiness TEChnology Conference (FUBUTEC 2008) pp. 5-12, Porto, Portugal, April, 2008, EUROSIS, ISBN 978-9077381-39-7.
+
+Content Retrieved from Kaggle
+Visit Kaggle for a complete description: https://www.kaggle.com/uciml/student-alcohol-consumption
+
+##Assignment
+As the lead data scientist, you are asked to complete an analysis (report) for a client to understand the leading causes of student absences (number of school absences, 0 to 93) in math classes.
+
+The client you are completing the report for hypothesizes that students who are in a romantic relationship (yes or no) will tend to have more absences. Use an explanatory model to test this research question, and write up the results of your analysis in an APA-style report to deliver to your client. Write as if your reader is unfamiliar with the dataset and sampling design.
+
+1. Please complete your coding using this R-Markdown file as a template.
+2. Use the questions provided in the instructions document to complete your coding and write up.
+2. Yes, please create a word document to write-up your report. DO NOT DO YOUR WRITE UP IN R_MARKDOWN.
+
+##Analyses and Tasks
+See week 4 assignment questions.
+
+----------------------------------------------------------
+##STEP 1: SET UP
+set working directory and load dataset
+```{r}
+```
+Next load favorite packages
+```{r}
+
+```
+
+##ACTIVITY START
+
+##Task 1. Data Description
+
+
+a. What are the frequencies of the categorical demographic variables?
+```{r}
+```
+b. What are the five-number summaries of your quantitative demographic variables?
+```{r}
+
+```
+c. Provide descriptive statistics of your outcome and explanatory variable.
+```{r}
+
+```
+d. Create a histogram of the absences variable. Reference the figure in your report. What do you see? Describe the shape, center, skewness, and weirdness.
+```{r}
+
+```
+Provide a visualization of the research question. Reference the figure in your report. What do you see?
+```{r}
+
+```
+##TASK 2: Modeling our Research Question: Absences explained by Romantic
+
+Part 1) Empty Model
+a. Fit the empty model to your outcome
+```{r}
+```
+b. Now that you have estimates of your parameter(s), put them into a model statement (see Ch. 7.2).
+```{r}
+
+```
+c. Based on the model output and model statement, interpret the estimated parameter(s). What do the numbers mean?
+```{r}
+
+```
+Part 2) Explanatory model
+a. Add your explanatory variable to the model. How is your X coded?
+```{r}
+```
+b. Now that you have estimates of your parameter(s), put them into a model statement (see Ch. 7.2).
+```{r}
+```
+c. Based on the model output and model statement, interpret the estimated parameter(s). What do the numbers mean?
+
+
+Part 3) Comparing Models
+a. Create a supernova() table and put it in your document.
+```{r}
+```
+
+
+##END ASSIGNMENT
