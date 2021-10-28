@@ -1,0 +1,171 @@
+---
+title: "Week 1, Assignment1"
+author: "Ryan Paw"
+date: "10/3/2020"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#LOAD DATA
+myDataLocation <- "/Users/RyanPaw/My Files/R/ANA605/wk_1"
+setwd(myDataLocation) 
+MyData<- read.csv(file = file.path(myDataLocation, "admission_data.csv"), header = TRUE)
+
+#LOAD PACKAGES
+library(dplyr) 
+library(ggplot2)
+library(ggformula)
+library(supernova)
+library(lsr)
+library(mosaic)
+library(skimr)
+library(stargazer)
+library(robust)
+library(corrplot)
+
+```
+```{r}
+str(MyData) 
+```
+Q1: 1.	For each of the following explanatory variables, fit a separate regression and correlation for the outcome variable, "chance of admit"
+
+
+```{r}
+#Factor the Binary numerics and plot using boxplot
+MyData$ResearchFactor <- factor(MyData$Research, levels=c(0,1),labels=c("No","Yes"))
+gf_boxplot(Chance.of.Admit~ResearchFactor,data=MyData)
+
+#Regression
+research.model <- lm(Chance.of.Admit~ResearchFactor,data=MyData)
+research.model
+
+#Correlation
+research.correlation <- cor(Chance.of.Admit~Research,data=MyData)
+research.correlation
+
+supernova(research.model)
+
+```
+GPA
+```{r}
+#Plot
+gf_point(Chance.of.Admit~CGPA,data=MyData) %>%
+  gf_lm()
+
+#Regression
+GPA.model <- lm(Chance.of.Admit~CGPA,data=MyData)
+GPA.model
+
+#Correlation
+GPA.correlation <- cor(Chance.of.Admit~CGPA,data=MyData)
+GPA.correlation
+
+supernova(GPA.model)
+
+```
+GRE
+```{r}
+#Plot
+gf_point(Chance.of.Admit~GRE.Score,data=MyData) %>%
+   gf_lm()
+#Regression
+GRE.model <- lm(Chance.of.Admit~GRE.Score,data=MyData)
+GRE.model
+
+#Correlation
+GRE.correlation <- cor(Chance.of.Admit~GRE.Score,data=MyData)
+GRE.correlation
+
+supernova(GRE.model)
+
+```
+TOEFL
+```{r}
+#Plot
+gf_point(Chance.of.Admit~TOEFL.Score,data=MyData) %>%
+   gf_lm()
+#Regression
+TOEFL.model <- lm(Chance.of.Admit~TOEFL.Score,data=MyData)
+TOEFL.model
+
+#Correlation
+TOEFL.correlation <- cor(Chance.of.Admit~TOEFL.Score,data=MyData)
+TOEFL.correlation
+
+supernova(TOEFL.model)
+
+```
+Q6: Obtain predictions for the following respondents for each of the explanatory variables below. Based on your analyses, who do you believe has the best chance of getting admitted? Why?
+
+```{r}
+#Make functions of your regression models
+research.fun <- makeFun(research.model)
+GPA.fun <- makeFun(GPA.model)
+GRE.fun <- makeFun(GRE.model)
+TOEFL.fun <- makeFun(TOEFL.model)
+
+MyData$research.pred <- predict(research.model)
+MyData$GPA.pred <- predict(GPA.model)
+MyData$GRE.pred <- predict(GRE.model)
+MyData$TOEFL.pred <- predict(TOEFL.model)
+
+#Out of the 4 Respondents, I believe Respondent #56 has the best chance of getting admitted because his/her GRE Scores are much higher than the others which gives us a predicted Chance of Admit at 76%. Respondent #78 comes close to #56 because #78 has the highest GPA (65%) and our previous analysis showed that GPA is the strongest explanatory variable. However, #56 has an exceptionally high GRE score and good scores for our other variables, which makes me believe #56 has a higher chance of getting admitted.  
+```
+Respondent40
+```{r}
+# Respondent #40
+res40 <- MyData[40,]
+research.fun(res40$Research)
+GPA.fun(res40$CGPA)
+GRE.fun(res40$GRE.Score)
+TOEFL.fun(res40$TOEFL.Score)
+
+
+```
+Other Respondents
+```{r}
+# Other respondents (substitute in with dat40)
+#Respondent #56
+res56 <- MyData[56,]
+research.fun(res56$Research)
+GPA.fun(res56$CGPA)
+GRE.fun(res56$GRE.Score)
+TOEFL.fun(res56$TOEFL.Score)
+
+
+#Respondent #78
+res78 <- MyData[78,]
+research.fun(res78$Research)
+GPA.fun(res78$CGPA)
+GRE.fun(res78$GRE.Score)
+TOEFL.fun(res78$TOEFL.Score)
+
+
+#Respondent #93
+res93 <- MyData[93,]
+research.fun(res93$Research)
+GPA.fun(res93$CGPA)
+GRE.fun(res93$GRE.Score)
+TOEFL.fun(res93$TOEFL.Score)
+
+
+```
+Extra Credit
+```{r}
+#GPA Model
+#Yi=-1.07+0.21Xi+ei    
+#i=100
+
+MyData$GPA.resid <- resid(GPA.model)
+MyData[100,"GPA.resid"]
+
+Yi = 0.79
+b0 = -1.07
+b1 = 0.21
+Xi = 8.88 
+ei = 6.948265e-03 = 0.00
+
+-1.07 + (0.21*8.88) + 0.01
+
+```

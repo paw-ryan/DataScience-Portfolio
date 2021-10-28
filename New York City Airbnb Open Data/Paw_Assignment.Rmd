@@ -1,0 +1,213 @@
+---
+Author: "Student Name"
+title: "Assignment 3"
+output: html_notebook
+---
+
+##Data Description
+This data was downloaded from Kaggle.com, a site that houses open source datasets. This specific dataset is titled: “New York City Airbnb Open Data,” and was originally sourced from Airbnb. From the Kaggle website (below):
+
+##Context
+Since 2008, guests and hosts have used Airbnb to expand on traveling possibilities and present more unique, personalized way of experiencing the world. This dataset describes the listing activity and metrics in NYC, NY for 2019.
+
+##Content
+This data file includes all needed information to find out more about hosts, geographical availability, necessary metrics to make predictions and draw conclusions.
+
+https://www.kaggle.com/dgomonov/new-york-city-airbnb-open-data/downloads/new-york-city-airbnb-open-data.zip/3
+
+----------------------------------------------------------
+##STEP 1: SET UP
+set working directory and load dataset
+```{r}
+myDataLocation <- "/Users/RyanPaw/My Files/R/ANA600/wk_3"
+setwd(myDataLocation)
+airbnb_data <- read.csv(file = "airbnb_data.csv", header = TRUE)
+```
+Next load favorite packages
+```{r include=FALSE}
+library(dplyr) 
+library(ggplot2)
+library(ggformula)
+library(supernova)
+library(lsr)
+library(mosaic)
+```
+##STEP 2: Instructions
+
+Perform all work within this Rmd file. I do not want a word document. Maintain APA stype formatting for the parts where you are actually writing something down. 
+
+-------------------------------------------------------
+##ACTIVITY START
+
+##Task 1. Using filter() remove any observations that have: room_type = “Shared room” and a price greater than 500. In other words, include only non-shared rooms with prices less than or equal to 500. 
+
+```{r}
+FilteredData <- filter(airbnb_data,(airbnb_data$room_type != "Shared room") & (airbnb_data$price <= 500))
+```
+## Task 2. Converting a categorical variable into a numeric.
+Create another variable from the factor variable, room_type, into a numeric coding scheme, where 0 = “Private room” and 1 = “Entire home/apt”. Code included below...
+
+```{r}
+#STEP 1: Convert room type to a numeric variable called room_type_num.
+FilteredData$room_type_num <- as.numeric(FilteredData$room_type)
+
+#STEP 2: Recode room_type_num values to be 0=Private Room or 1=Entire Home
+FilteredData$room_type_num = recode(FilteredData$room_type, "Private room" = 0, "Entire home/apt" = 1)
+
+#STEP 3: Check your work
+FilteredData$room_type_num
+str(FilteredData)
+
+```
+##Answer the following questions refer to the dataframe you just filtered.
+
+(a) Looking at the different rental options, how much does a rental cost in general? (here we want the mean)
+```{r}
+summary(FilteredData)
+#On average, rentals in this dataset cost $133.20 /night. 
+```
+(b) Is there variation in price? (here we are looking for standard deviation)
+```{r}
+sd(FilteredData$price)
+#Yes, there is variation in price. There is a standard deviation of 88.02 for pricing.
+
+```
+(c) What do you think makes a rental cost more versus less? (Name a few features)
+Rental costs can cost more if they have more features, such as number of bathrooms, number of bedrooms, neighborhood, furniture, outdoor view, better customer reviews.
+
+(d) Create a story of a DGP that might be responsible for the variation you see in price.
+The variation in price may be explained by the situation and the needs from the customer. For example, one customer may want a fancier Airbnb for a special event, like a bachelor/bachelorette party, while another customer may want an Airbnb only for a bed for a single night and doesn't need anything fancy. This is Airbnb data is also coming from New York, where pricing is typically more expensive than most cities in America and can lead to wider price margins. What the customer wants and the environtal factors impact the DGP and may be responsible for the variation in pricing.
+
+-----------------------------------------------------------------------
+##Task 3. Exploring the Price variable
+(a) Plot a histogram of price. 
+```{r}
+gf_histogram(~price,data=FilteredData, fill = "darkgreen")
+
+```
+(b) Discuss the shape, center, spread, and weirdness. 
+The shape of this histogram is skewed right. The center has one big peak (unimodal) at ~70, and then trails downward from there. The spread is wide, and the pricing ranges between 0-500. There is some slight weirdness at the right-most point in the histogram where the frequency of higher priced Airbnb actually starts to slightly increase. 
+
+(c) Provide a five-number summary of price. 
+```{r}
+fav_stats(FilteredData$price)
+
+```
+(d) Create a visualization to see price (outcome) by the different room_type categories, “Private room” and “Entire home/apt” (explanatory). 
+    - (Hint: use the factor version of the room_type variable, not the numeric version).
+```{r}
+gf_jitter(price~room_type,data=airbnb_data, color="darkblue")
+
+```
+(e) What do you observe is the relationship between price and room type, based on the graphic?
+The relationship between price and room type varies the most for "Entire home/apt" (most outliers), while it varies the least for "Shared room." "Private room" is in the middle. "Entire home/apt" prices likely vary more due to the additional home features compared to the other categories. 
+
+--------------------------------------------------------------------------------------
+##Task 4: Fitting Models
+(a) Fit an empty model using the linear model function: lm(y ~ NULL, data=dataframe). 
+    - Do this using price as your outcome variable. 
+    - Save is to an object called priceEmpty.
+    - Review the results of your model to answer (b - e)
+```{r}
+priceEmpty <- lm(price~room_type,data=airbnb_data)
+priceEmpty
+
+```
+(b) Based on your model output, what is the value of the intercept? 
+The value of the intercept is 211.8
+
+(c) What does the intercept represent? 
+
+```{r}
+#The intercept represents the mean, which is the balancing point between the distances between the points, or deivations.
+
+```
+(d) Use anova() to find the value of sums of squares from your priceEmpty model. 
+
+```{r}
+anova(priceEmpty)
+```
+(e) What does the sums of squares represent, in your own words?
+The sum of squares represent the total squared deviations from the mean.
+
+(f) Define what residuals, sums of squares, and standard deviations are in your own words.
+#Residuals: The residuals is the difference between the mean (empty model) and the points in the dataset. 
+
+#Sum of Squares: The sum of squares represent the total squared deviations from the mean.
+ 
+#Standard Deviations: The standard deviation is the average deviation from the mean.
+
+------------------------------------------------------
+
+##Task 6: Z-Scores
+(a) Using z-scores, compare the price, $275, between the room_types, “Private room”=0 and “Entire home/apt” = 1.
+```{r}
+air_bnb.stats <- favstats(price ~ room_type, data = FilteredData)
+air_bnb.stats
+xpnorm(275, mean = air_bnb.stats$mean, sd = air_bnb.stats$sd, alpha=.3)
+```
+(b) What z-scores did you get for the two room_types? 
+I got a z-score of 3.78 (Private room) and 1.08 (Entire home/apt).
+
+(c) Interpret the graph you just produced.
+The graph shows that the Z-Score for a private room is 3.78, which means the price of 275 is 3.78 standard deviations above the mean. The Z-score for an Entire home/apt is 1.08, which means the price of 275 it is 1.08 standard deviations above the mean. 
+
+----------------------------------------------------------------------------------
+Let's calculate these manually!
+
+```{r}
+#This is where your code goes
+#The Manual way!
+
+#Step 1: run fav stats
+air_bnb.stats <- favstats(price ~ room_type, data = FilteredData)
+
+#Step 2: save the favstats output for the mean and standard deviation of each room type.
+# Private Room mean
+Private_Room_Mean <- fav_stats[2,7]
+Private_Room_Mean
+
+#Private Room standard deviation
+Private_Room_SD <- fav_stats[2,8]
+Private_Room_SD
+
+#the [1,7] and [1,8] brackets tell R that we want to only keep the specified rows and columns
+
+#Whole House mean
+Whole_House_Mean <- fav_stats[1,7]
+Whole_House_Mean
+
+#Whole House standard deviation
+Whole_House_SD <- fav_stats[1,8]
+Whole_House_SD
+
+#Step 3: Plot a histogram, fill by room type and create vertical lines to indicate the values we wish to compare: 275, mean of room1, mean of room 2
+gf_histogram(~price,data=FilteredData,fill=~room_type) %>%
+    gf_vline(xintercept = 275) %>%
+    gf_vline(xintercept = ~Private_Room_Mean,data=air_bnb.stats, color = "blue") %>%
+    gf_vline(xintercept = ~Whole_House_Mean,data=air_bnb.stats, color = "red")
+
+#Step 4: Calculate z-scores for Private Room types (Room0) and Whole House types (Room1)
+
+#Room0 = Private Room
+(275 - Private_Room_Mean)/(Private_Room_SD)
+
+#Room1 = Whole House
+(275 - Whole_House_Mean)/(Whole_House_SD)
+
+```
+(d) Interpret what they mean, in relation to each distribution. Discuss this interpretation of z-scores for the price, $275, in relation to your DGP in question 2. 
+
+The black vertical line represents our price that we are comparing, $275. The red vertical line represents the mean (empty model) of the Entire home/apt data. The blue vertical line represents the mean (empty model) of the Private Room data.
+The Z-Score for a Private room is 3.78, which means it is 3.78 standard deviations above the mean (blue vertical line). The Z-score for an Entire home/apt is 1.08, which means it is 1.08 standard deviations above the mean (red vertical line).
+Based on our analysis, the price of 275 is above average for both room types. This shows that a customer booking a room for 275 /night is not as frequent or likely, no matter the room type. 275 is high for both room types, even for a more expensive city like New York.
+
+(e) How might the room type explain some of the variation in price?
+The room type explains the variation in price because of the additional features different room types have, which allow the room to be priced higher/lower. A bigger space (Entire home/apt) has more variation than a smaller space (Private room). With a bigger spaced room, the landlord has more opportunity to increase the value of the space. In comparison to a smaller space (Private room), it has less opprotunity to increase the value. Room type may be one factor that explains variation in pricing, but there are other factors (ex. furniture, neighborhood, etc.) that could affect pricing. This can be modeled as: PRICE = ROOM TYPE + OTHER STUFF.
+
+(f) Would knowing the room type help you make a better prediction about price? Why or why not?
+Yes, understanding the room type can help make better predictions about the price because our data shows that more room space (ex: Entire home/apt) may lead to higher prices. Our red vertical line in our histogram above also indicates a higher average spending for Entire home/apt compared to Private rooms. Based on our visualizations and computations, it shows that a customer buying an Entire home/apt is more likely to spend more than a customer buying a Private room.
+
+
+
+##END ASSIGNMENT

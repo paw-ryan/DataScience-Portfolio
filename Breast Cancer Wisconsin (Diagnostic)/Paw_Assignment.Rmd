@@ -1,0 +1,187 @@
+---
+title: "Assignment 3"
+author: "Ryan Paw"
+date: "10/"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+## Read in data
+myDataLocation <- "/Users/RyanPaw/My Files/R/ANA605/wk_3"
+
+setwd(myDataLocation)
+
+dat <- read.csv(file = "cancer_data.csv", header = TRUE)
+str(dat)
+summary(dat)
+
+# Load and install required packages
+library(mosaic)
+#install.packages("effsize")
+library(effsize)
+library(lsr)
+library(supernova)
+```
+
+## Question 1
+1.	Descriptive statistics.
+  a.	Quantitative Variables: perimeter_mean and texture_mean
+    i.	Create a histogram for each variable
+    ii.	Obtain the five number summaries for each variable
+  b.	Categorical Variable: diagnosis
+   i.	Create a boxplot with perimeter_mean as the explanatory variable
+    ii.	Obtain frequencies of the two categories.
+    iii.	Obtain means and standard deviations of perimeter_mean, aggregated by diagnosis
+```{r}
+#1a i and ii. 
+gf_histogram(~perimeter_mean, data=dat)
+favstats(dat$perimeter_mean)
+
+gf_histogram(~texture_mean, data=dat)
+favstats(dat$texture_mean)
+
+#1 b
+gf_boxplot(perimeter_mean ~ diagnosis, data = dat)
+tally(~ diagnosis, data = dat)
+
+aggregate(perimeter_mean ~ diagnosis, data=dat, FUN=mean)
+aggregate(perimeter_mean ~ diagnosis, data=dat, FUN=sd)
+```
+
+## Question 2
+
+2.	Correlation between perimeter_mean and texture_mean
+  a.	Obtain the correlation.
+  b.	Interpret the correlation (reference Assignment One for examples).
+  c.	What is the 95% confidence interval? Use cor.test().
+  d.	What is the 75% confidence interval? Use cor.test().
+  e.	Are you confident that the true population correlation could be zero? Why or why not?
+
+
+```{r}
+#Q2 a
+cor(perimeter_mean ~ texture_mean, data=dat)
+
+#b. 0.33 standard deviations of perimeter_mean should be added for every 1 standard deviation of texture_mean
+#c. 
+cor.test(perimeter_mean ~ texture_mean, data = dat, conf.level=0.95)
+#d
+cor.test(perimeter_mean ~ texture_mean, data = dat, conf.level=0.75)
+#e - I am not confident that the true population could be zero because our calculated confidence intervals for 95% and 75% are above 0.
+```
+
+## Question 3
+
+3.	Fit an empty model for perimeter_mean,
+  a.	What are the parameter estimates? Interpret them.
+  b.	What is the PRE? Interpret it. 
+  c.	Provide a 95% confidence interval around your parameter estimate. How did you obtain it? Interpret it.
+
+```{r}
+#a - The parameter estimate in the empty model is the sample mean. 
+emptyModel <- lm(perimeter_mean ~ NULL, data=dat)
+summary(emptyModel)
+
+#b - The PRE is the proportion of error explained by the perimeter_mean compared to the empty model
+supernova(emptyModel)
+
+#c
+confint(emptyModel, level = .95)
+
+```
+## Question 4
+
+4.	Fit a linear model with perimeter_mean as the outcome and diagnosis as the explanatory variable.
+  a.	What are the parameter estimates? Interpret them.
+  b.	What are the 95% confidence intervals around your slope? Describe the method you used to obtain them.
+  c.	What are the 99% confidence intervals around your slope? Describe the method you used to obtain them.
+  d.	What is the effect size, expressed as Cohen’s d?
+    i.	Interpret the Cohen’s d from the model.
+    ii.	What is the 99% confidence interval around Cohen’s d?
+    iii.	Interpret the confidence interval for Cohen’s d. What do the units represent?
+  e.	Do you believe there is a relationship between perimeter_mean and diagnosis? Why or why not?
+  f.	How does the information you received from the confidence interval relate to the hypothesis that this sample represents (is drawn from) a population with these parameter estimates?
+
+```{r}
+#a
+diagnosis.Model <- lm(perimeter_mean ~ diagnosis, data=dat)
+summary(diagnosis.Model)
+supernova(diagnosis.Model)
+
+#b
+confint(diagnosis.Model, level = 0.95)
+
+#c
+confint(diagnosis.Model, level = 0.99)
+
+#d
+cohen.d(perimeter_mean ~ diagnosis, data=dat, conf.level= .99)
+#Cohen's d is the size of a group difference in standard deviation units. Cohen d's lower effect size is -2.57 and upper effect size is -2.00, which shows that if both groups' means don't differ by -2.28 standard deviations or more (d estimate), the difference is minimal, even if it is statistically significant.
+
+#e Yes, I believe these is a relationship between perimeter_mean and diagnosis. Coehn's d and the mean difference between benign and malignant diagnosis does not contain 0.
+
+#f - Skip
+```
+## Question 5
+
+5.	Fit a linear model with perimeter_mean as the outcome and texture_mean as the explanatory variable.
+  a.	What are the parameter estimates? Interpret them.
+  b.	95% confidence intervals around your slope.
+    i.	Construct the confidence intervals using bootstrap with 1000 samples. 
+      1.	What are the units of the confidence intervals?
+      2.	How would you interpret the confidence interval?
+    ii.	Construct the confidence intervals using the model. 
+      1.	What are the units of the confidence intervals?
+      2.	How would you interpret the confidence interval?
+    iii.	Are you confident that the true population slope parameter is not 0? Why or why not?
+  c.	75% confidence intervals around your slope.
+    i.	Construct the confidence intervals using bootstrap with 1000 samples.
+    ii.	Construct the confidence intervals using the model.
+    iii.	Are the confidence intervals from these two methods similar? If they are similar, why is this so? If they are not, why not?
+  d.	What is the effect size, expressed as PRE? Interpret the PRE of the model.
+  e.	Do you believe there is a relationship between texture_mean and perimeter_mean? Why or why not?
+
+```{r paged.print=FALSE}
+#Q5 a
+textureModel <-  lm(perimeter_mean ~ texture_mean, data=dat)
+textureModel
+summary(textureModel)
+supernova(textureModel)
+
+#b & c
+textureBoot <- do(1000) * lm(perimeter_mean ~ texture_mean, data= resample(dat, 569))
+favstats(textureBoot$texture_mean)
+confint(textureBoot, level=0.95)
+confint(textureBoot, level=0.75)
+#The units of the confidence intervals are expressed in 0.23 standard errors above the mean
+#With 95% confidence, in the case of perimeter_mean and texture_mean, the true population mean resides between 1.42 and 2.23. Therefore, we can adopt the complex model and reject the simple model since it does not contain 0.
+#With 75% confidence, in the case of perimeter_mean and texture_mean, the true population mean resides between 1.61 and 2.14. Therefore, we can adopt the complex model and reject the simple model since it does not contain 0.
+
+confint(textureModel, level=0.95)
+confint(textureModel, level=0.75)
+#The units of the confidence intervals are expressed in 0.22 standard errors above the mean
+#The units of the confidence intervals are expressed in the original units of measurement (not clear from the dataset what units are perimeter_mean/texture_mean).
+#With 95% confidence, in the case of perimeter_mean and texture_mean, the true population mean resides between 1.42 and 2.30. Therefore, we can adopt the complex model and reject the simple model since it does not contain 0.
+#With 75% confidence, in the case of perimeter_mean and texture_mean, the true population mean resides between 1.60 and 2.11. Therefore, we can adopt the complex model and reject the simple model since it does not contain 0.
+
+#Both confidence intervals from these two methods are very similar, with only slight differences. The upper and lower estimates for both models are almost exactly the same and are slightly off by < 0.07.  
+
+#d
+supernova(textureModel)
+#The PRE is 0.10, which is considered low. This shows that the proportion of error between perimeter_mean and texture-mean is not as strong.
+
+#e 
+#I believe that the relationship between the texture_mean and the perimeter_mean is low. Although the F ratio may be high, the PRE value of 0.10 is very low, which shows the relationship is not as strong. 
+```
+## Question 6
+
+6.	Comparing the models in Q4 and Q5, which do you believe predicts perimeter_mean better? Why or why not? Justify your reasoning.
+
+```{r paged.print=FALSE}
+supernova(textureModel)
+supernova(diagnosis.Model)
+
+#I believe diagnosis predicts perimeter_mean better than texture_mean because of its higher PRE value (0.55 > 0.10) and F ratio (697.23 > 69.07).
+```

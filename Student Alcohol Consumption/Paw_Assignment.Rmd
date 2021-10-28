@@ -1,0 +1,130 @@
+---
+Author: "Ryan Paw"
+title: "Assignment 4"
+output: html_notebook
+---
+
+##Data Description
+This data was downloaded from Kaggle.com, a site that houses open source datasets. This specific dataset is titled: “Student Alcohol Consumption: Social, gender and study data from secondary school students.”
+
+Source Information
+P. Cortez and A. Silva. Using Data Mining to Predict Secondary School Student Performance. In A. Brito and J. Teixeira Eds., Proceedings of 5th FUture BUsiness TEChnology Conference (FUBUTEC 2008) pp. 5-12, Porto, Portugal, April, 2008, EUROSIS, ISBN 978-9077381-39-7.
+
+Content Retrieved from Kaggle
+Visit Kaggle for a complete description: https://www.kaggle.com/uciml/student-alcohol-consumption
+
+##Assignment
+As the lead data scientist, you are asked to complete an analysis (report) for a client to understand the leading causes of student absences (number of school absences, 0 to 93) in math classes.
+
+The client you are completing the report for hypothesizes that students who are in a romantic relationship (yes or no) will tend to have more absences. Use an explanatory model to test this research question, and write up the results of your analysis in an APA-style report to deliver to your client. Write as if your reader is unfamiliar with the dataset and sampling design.
+
+1. Please complete your coding using this R-Markdown file as a template.
+2. Use the questions provided in the instructions document to complete your coding and write up.
+2. Yes, please create a word document to write-up your report. DO NOT DO YOUR WRITE UP IN R_MARKDOWN.
+
+##Analyses and Tasks
+See week 4 assignment questions.
+
+----------------------------------------------------------
+##STEP 1: SET UP
+set working directory and load dataset
+```{r}
+myDataLocation <- "/Users/RyanPaw/My Files/R/ANA600/wk_4"
+setwd(myDataLocation)
+MyData <- read.csv(file = "student-mat.csv", header = TRUE)
+```
+Next load favorite packages
+```{r}
+library(dplyr) 
+library(ggplot2)
+library(ggformula)
+library(supernova)
+library(lsr)
+library(mosaic)
+```
+
+##ACTIVITY START
+
+##Task 1. Data Description
+str(MyData)
+#absences = romantic + other stuff
+
+a. What are the frequencies of the categorical demographic variables?
+```{r}
+tally(MyData$sex)
+tally(MyData$address)
+tally(MyData$school)
+```
+b. What are the five-number summaries of your quantitative demographic variables?
+```{r}
+favstats(MyData$age)
+
+```
+c. Provide descriptive statistics of your outcome and explanatory variable.
+```{r}
+favstats(~absences, data=MyData)
+tally(~romantic, data=MyData)
+
+```
+d. Create a histogram of the absences variable. Reference the figure in your report. What do you see? Describe the shape, center, skewness, and weirdness.
+```{r}
+gf_histogram(~absences,data=MyData)
+
+#The absences histogram is unimodal with high kurtosis between 0-1 absences. The shape of the histogram is skewed right. There are few outliers on the right-most side of the histogram.
+```
+Provide a visualization of the research question. Reference the figure in your report. What do you see?
+```{r}
+gf_histogram(~absences, data=MyData, fill= ~romantic)
+gf_boxplot(absences~romantic,data=MyData)
+
+#In my histogram, I see that there is a higher count of students (no romantic relationship) have fewer absences, which is indicated by the red peak. 
+#Students that are in a romantic relationship (indicated by the blue bar) have a smaller count of few absences. 
+```
+##TASK 2: Modeling our Research Question: Absences explained by Romantic
+
+Part 1) Empty Model
+a. Fit the empty model to your outcome
+```{r}
+empty.model <- lm(absences~NULL,data=MyData)
+empty.model
+```
+b. Now that you have estimates of your parameter(s), put them into a model statement (see Ch. 7.2).
+```{r}
+#Model statement: Yi = b0 + ei
+#absences = 5.709 + ei
+
+```
+c. Based on the model output and model statement, interpret the estimated parameter(s). What do the numbers mean?
+```{r}
+#The intercept (5.709) is the mean for absences in our data (also the Grand Mean because this is an empty model). This intercept is our "b0" in our model statement.
+#The "ei" is our error, which is each person's residual from the model
+
+```
+Part 2) Explanatory model
+a. Add your explanatory variable to the model. How is your X coded?
+```{r}
+rom.model <- lm(absences ~ romantic, data = MyData)
+rom.model
+```
+b. Now that you have estimates of your parameter(s), put them into a model statement (see Ch. 7.2).
+```{r}
+#Model Statement: Yi = b0 + b1Xi + ei
+#absences= 4.840 +2.599*romantic + error
+
+```
+c. Based on the model output and model statement, interpret the estimated parameter(s). What do the numbers mean?
+The intercept is the mean for students who are NOT in a romantic relationship
+The slope is the mean for students who ARE in a romantic relationship (YES)
+The average for those who are not in a romantic relationship is 4.84
+The average for those who are in a romantic relationship = 4.840 + 2.599 = 7.439
+
+Part 3) Comparing Models
+a. Create a supernova() table and put it in your document.
+```{r}
+supernova(rom.model)
+supernova(empty.model)
+#2.4% of absenses (PRE) in our dataset can be attributed to relationship status.
+```
+
+
+##END ASSIGNMENT

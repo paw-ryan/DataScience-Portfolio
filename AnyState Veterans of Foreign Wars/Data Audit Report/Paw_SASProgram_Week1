@@ -1,0 +1,154 @@
+/* IMPORT DATA */
+/* Import to ANA610 folder (to create tables)*/
+libname sasdata '/home/u50066252/my_shared_file_links/kevinduffy-deno1/Homework 1';
+data ana610.donor_census; set ana610.donor_census;run;
+proc import datafile='/home/u50066252/my_shared_file_links/kevinduffy-deno1/Homework 1/donor_profile.csv' out=ana610.donor_profile replace; run;
+proc import datafile='/home/u50066252/my_shared_file_links/kevinduffy-deno1/Homework 1/donor_survey.csv' out=ana610.donor_survey replace;run;
+proc import datafile='/home/u50066252/my_shared_file_links/kevinduffy-deno1/Homework 1/giving_history.csv' out=ana610.giving_history replace;run;
+
+/* Import to Work folder (to create merged file)*/
+libname sasdata '/home/u50066252/my_shared_file_links/kevinduffy-deno1/Homework 1';
+data work.donor_census; set sasdata.donor_census;run;
+proc import datafile='/home/u50066252/my_shared_file_links/kevinduffy-deno1/Homework 1/donor_profile.csv' out=work.donor_profile replace; run;
+proc import datafile='/home/u50066252/my_shared_file_links/kevinduffy-deno1/Homework 1/donor_survey.csv' out=work.donor_survey replace;run;
+proc import datafile='/home/u50066252/my_shared_file_links/kevinduffy-deno1/Homework 1/giving_history.csv' out=work.giving_history replace;run;
+
+
+
+
+/* CREATE TABLES */
+/* check contents */
+proc contents data=ana610.donor_census;run;
+proc contents data=ana610.donor_profile;run;
+proc contents data=ana610.donor_survey;run;
+proc contents data=ana610.giving_history;run;
+
+/* donor_census numerical data */
+proc means data=ana610.donor_census n nmiss min mean median max;
+	var MEDIAN_HOME_VALUE MEDIAN_HOUSEHOLD_INCOME PCT_MALE_MILITARY PCT_WWII_VETERANS PCT_MALE_VETERANS PCT_OWNER_OCCUPIED
+	PCT_VIETNAM_VETERANS PER_CAPITA_INCOME; run;
+	
+/* donor_census categorical data*/
+proc freq data=ana610.donor_census; table STATE WEALTH_RATING; run;
+
+/* donor_cenus output stats for character data */
+data ana610.donor_census; set ana610.donor_census;
+	len_CONTROL_NUMBER = length(CONTROL_NUMBER); run; 
+proc means data=ana610.donor_census n nmiss min mean median max; 
+	var len_CONTROL_NUMBER; run; 
+
+/* donor_profile numerical data */
+proc means data=ana610.donor_profile n nmiss min mean median max;
+	var CLUSTER_CODE DONOR_AGE run;
+	
+/* donor_profile categorical data*/
+proc freq data=ana610.donor_profile; table DONOR_GENDER HOME_OWNER OVERLAY_SOURCE PUBLISHED_PHONE SES URBANICITY INCOME_GROUP RECENT_STAR_STATUS;; run;
+
+/* donor_profile output stats for character data */
+data ana610.donor_profile; set ana610.donor_profile;
+	len_CONTROL_NUMBER = length(CONTROL_NUMBER); run; 
+proc means data=ana610.donor_profile n nmiss min mean median max; 
+	var len_CONTROL_NUMBER; run;
+	
+/* donor_survey numerical data */
+proc means data=ana610.donor_survey n nmiss min mean median max;
+	var survey_value; run;
+	
+/* donor_survey categorical data */
+data ana610.donor_survey; set ana610.donor_survey;
+proc freq data=ana610.donor_survey; 
+	tables survey_question; run;
+	
+/* donor_survey character data */
+data ana610.donor_survey; set ana610.donor_survey;
+	len_CONTROL_NUMBER = length(CONTROL_NUMBER); run; 
+proc means data=ana610.donor_survey n nmiss min mean median max; 
+			var len_CONTROL_NUMBER; run;
+			
+/* giving_history numerical data */
+proc means data=ana610.giving_history n nmiss min mean median max;
+	var MONTHS_SINCE_ORIGIN MOR_HIT_RATE RECENT_RESPONSE_PROP RECENT_AVG_GIFT_AMT
+	 RECENT_RESPONSE_COUNT RECENT_CARD_RESPONSE_COUNT 
+	MONTHS_SINCE_LAST_PROM_RESP LIFETIME_CARD_PROM LIFETIME_PROM LIFETIME_GIFT_AMOUNT 
+	LIFETIME_GIFT_COUNT LIFETIME_AVG_GIFT_AMT LIFETIME_GIFT_RANGE LIFETIME_MAX_GIFT_AMT 
+	LIFETIME_MIN_GIFT_AMT LAST_GIFT_AMT CARD_PROM_12 NUMBER_PROM_12 MONTHS_SINCE_LAST_GIFT
+	MONTHS_SINCE_FIRST_GIFT RECENT_AVG_CARD_GIFT_AMT TARGET_D; run;
+	
+/* giving_history categorical data*/
+proc freq data=ana610.giving_history; table TARGET_B IN_HOUSE PEP_STAR RECENCY_STATUS_96NK FREQUENCY_STATUS_97NK; run;
+
+/* giving_history output stats for character data */
+data ana610.giving_history; set ana610.giving_history;
+	len_CONTROL_NUMBER = length(CONTROL_NUMBER); run; 
+proc means data=ana610.giving_history n nmiss min mean median max; 
+			var len_CONTROL_NUMBER; run;
+			
+			
+			
+			
+/* MERGE SECTION */
+/* check contents */
+proc contents data=work.donor_census;run;
+proc contents data=work.donor_profile;run;
+proc contents data=work.donor_survey;run;
+proc contents data=work.giving_history;run;
+
+/* choose 2 files to merge, print only first 10 rows */ 
+data work.donor_census; set work.donor_census;
+	proc print data=work.donor_census (firstobs = 1 obs = 10); run;
+data work.donor_profile; set work.donor_profile;
+	proc print data=work.donor_profile (firstobs = 1 obs = 10); var CONTROL_NUMBER; run;
+	
+/*  convert CONTROL_NUMBER to numeric */ 
+data work.donor_census; set work.donor_census;
+	CONTROL_NUMBER1 = input(control_number,8.);
+	drop control_number;
+run;
+data work.donor_census; set work.donor_census;
+	CONTROL_NUMBER = CONTROL_NUMBER1;
+	drop control_number1;
+run;
+
+/* merge CONTROL_NUMBER on donor_census and donor_profile using a left join */ 
+proc sort data=work.donor_census; by CONTROL_NUMBER; run; 
+proc sort data=work.donor_profile; by CONTROL_NUMBER; run; 
+data work.donor_merge1; merge work.donor_census (in=a) work.donor_profile; by CONTROL_NUMBER; if a; run;
+		proc contents data=work.donor_merge1; run;
+		proc print data=work.donor_merge1(firstobs = 1 obs = 10); run;
+
+/* transpose donor_survey */
+data work.donor_survey; set work.donor_survey;
+proc sort data=work.donor_survey; by control_number;run;
+proc transpose data=work.donor_survey out=work.donor_survey_wide; by control_number; id survey_question; run;
+
+/* create and merge donor_master with all 4 files*/
+data work.donor_survey_wide; set work.donor_survey_wide;
+data work.giving_history; set work.giving_history;
+proc sort data=work.donor_survey_wide; by CONTROL_NUMBER; run; 
+proc sort data=work.giving_history; by CONTROL_NUMBER; run; 
+data work.donor_master; 
+		merge work.donor_merge1 (in=a) work.donor_survey_wide work.giving_history; by control_number; if a; run;
+data ana610.donor_master; set work.donor_master;run;
+
+
+
+
+/* CHECK */
+/* total observations */
+proc sql; select count(*) into : nobs from ana610.donor_master;run;
+
+/* deduped - check for duplicates */ 
+proc sort data=ana610.donor_master out=work.clean nodupkey; by control_number; run;
+	proc sql; select count(*) into : nobs from work.clean; quit;
+
+/* print first and last obs */
+proc print data=ana610.donor_master (firstobs=1 obs=10); run;
+proc print data=ana610.donor_master (firstobs=19362 obs=19372); run;
+
+/* proc contents */
+proc contents data=ana610.donor_master out=work.contents; run;
+
+
+
+
+
