@@ -1,5 +1,8 @@
 # Data Science Portfolio
-blurp blurp blurp blurp blurp blurp 
+Welcome to my Data Science Portfolio! This repository contains a portfolio of my data science projects I completed for my academics, self learning, and hobby purposes. The porfolio contains Python notebooks, R markdown files, SAS files, and PDFs. For each project, my completed file is labeled as 'Paw_Assignment'. 
+
+If you have any questions, liked what you saw, have any work opportunities, or just want to chat feel free to reach out to me at: paw.ryan@gmail.com. 
+*Note: Data used in the projects is for demonstration purposes only*
 
 ## Data Analysis Projects 
 ### R Projects
@@ -10,20 +13,19 @@ blurp blurp blurp blurp blurp blurp
 - New York City Airbnb Open Data: An exploratory data analysis using regression methods on Airbnb listing activity in New York City, NY in 2019.
 - Student Alcohol Consumption: An analysis report for a client to understand the leading causes of student absences in math classes. The client hypothesizes that students who are in a romantic relationship (yes or no) will tend to have more absences. An explanatory model will be used to test this research question.
 
-*Skills: packages .......*
+*Skills: mosiac, dplyr, supernova, ggplot2, lsr, Analysis of Variance (ANOVA), null hypothesis testing, linear regression, confidence interval interpretations, standard error,  z-scores, data visualization*
 
 ### Python Projects
 - Diamond Characteristics: A principal component analysis (PCA), Generalized Linear Model (GLM), and linear model was created. PCA reduced the dimensionality of diamond characteristics, while keeping a high percentage of explained variance. GLM and a linear model was compared to understand which model performs better. 
+- Vehicle Characteristics: 428 vehicles were investigated to create a bi-variate and a multiple regression model to understand how other vehicle characteristics affect miles per gallon (MPG).
+- Boston House Price Prediction: A linear and robust regression model was created to predict the median value of homes in the Boston area. 
+- Wine Characteristics Dataset: A principal component analysis (PCA) was conducted on a dataset related to wine characteristics. The objective was to reduce the dimensionality of the dataset to 4 components. 
 - Berkeley Guidance Study: A multiple regression model was created to explain a longitudinal study of children in Berkeley, CA. R-squared, ANOVA, and F-test was computed to assess performance. 
 - Survey of Labour and Income Dyanmics (SLID): A regression model was created to understand the wage dynamics in Canada. ANOVA was used to describe the overall performance. 
 - Heart Disease Study: An analysis to identify trends in heart data to predict certain cardiovascular events or find any clear indications of heart health.
 - United Nations Study - Fertility: The data was collected from a 2011 United Nations study. A multiple regression model was created to explain the dependence of fertility on ppgdp.
-- Vehicle Characteristics: 428 vehicles were investigated to create a bi-variate and a multiple regression model to understand how other vehicle characteristics affect miles per gallon (MPG).
-- Boston House Price Prediction: A linear and robust regression model was created to predict the median value of homes in the Boston area. 
-- IBM HR Analytics Employee Attrition & Performance: 
-- Wine Characteristics Dataset: 
 
-*Skills: Machine learning, pandas, numpy, sklearn, matplotlib, Analysis of Variance (ANOVA), bi-linear regression, multiple regression, t-test, principal component analysis (PCA), Generalized Linear Model (GLM)*
+*Skills: Pandas, numpy, sklearn, matplotlib, Analysis of Variance (ANOVA), bi-linear regression, multiple regression, t-test, principal component analysis (PCA), Generalized Linear Model (GLM)*
 
 ### SAS Projects
 - 2018 Behavioral Risk Factor Surveillance System (BRFSS): This BRFSS dataset is by the Centers for Disease Control and Prevention (CDC) and included 360,665 participants.The purpose for this analysis was to assess if the generational age group that people are born in have a relationship with increased levels of poor mental health, after controlling sex, race, and income. The results show there is a relationship between generational age group and poor mental health. As generational age groups become more current, it is more likely that poor mental health is present. 
@@ -37,9 +39,10 @@ blurp blurp blurp blurp blurp blurp
 *Skills: Pearson chi-squared statistic, null hypothesis testing, odds ratio, logistic regression, adjusted/unadjusted probability, confidence intervals, contingency table analysis, log likelihood/AIC, Hosmer-Lemeshow (HL) test, Cochran-Mantel-Haenszel statistics, confounding variables, confirmatory factor analysis (CFA), multivariate analysis of variance (MANOVA)*
 
 ## Machine Learning
-- Breast Cancer Wisconsin Dataset: This data included breast cancer characteristics from a digitized image of a fine needle aspirate (FNA) of a breast mass. K-nearest neighbors was trained, hypertuned, and tested to determine if it performs well at predicting malignant tumors.
+- Breast Cancer Wisconsin Dataset: This dataset included breast cancer characteristics from a digitized image of a fine needle aspirate (FNA) of a breast mass. K-nearest neighbors (KNN), support vector machine (SVM), and random forest (RF) was trained, hypertuned, and tested to determine if it performs well at predicting malignant tumors.
+- IBM HR Analytics Employee Attrition & Performance: An analysis was conducted on employee attrition and performance data using machine learning and ensemble methods. The objective was to determine which model performs best at predicting employee attrition. The following methods were trained and tested: Decision tree, random forest, bagging, AdaBoost, AdaBoost+RandomForest, gradient boosting classifer, and XGBoost. 
 
-*Skills: data auditing, regulatory compliance, quality assurance reporting*
+*Skills: Sklearn, K-nearest neighbors, Random Forest, GridSearchCV, *
 
 ## Data Audit Reports
 - AnyState Veterans of Foreign Wars: A data audit report was created for AnyState Veterans of Foreign Wars. To improve the effectiveness of AnyState's solicitation campaigns, a predictive model will be built and score their marketing database. This data audit report is the first step to audit the data to support this model building effort. 
