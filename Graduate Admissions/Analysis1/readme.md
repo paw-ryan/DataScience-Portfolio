@@ -58,12 +58,12 @@ International Conference on Computational Intelligence in Data Science
     admit**. Fill in the following cell with the appropriate value for
     each element of the model.
 
-| Explanatory Variable | r    | \[b_{0}\] | \[b_{1}\] | df | SS Model | SS Total | PRE  | F       |
-| -------------------- | ---- | --------- | --------- | -- | -------- | -------- | ---- | ------- |
-| Research Experience  | 0.55 | 0.64      | 0.16      | 1  | 2.48     | 8.11     | 0.31 | 175.51  |
-| Undergraduate GPA    | 0.87 | \-1.07    | 0.21      | 1  | 6.19     | 8.12     | 0.76 | 1278.73 |
-| GRE Scores           | 0.80 | \-2.44    | 0.01      | 1  | 5.23     | 8.12     | 0.64 | 720.55  |
-| TOEFL Scores         | 0.79 | \-1.27    | 0.02      | 1  | 5.09     | 8.12     | 0.63 | 667.94  |
+| Explanatory Variable | r | \[b_{0}\] | \[b_{1}\] | df | SS Model | SS Total | PRE | F |
+| -------------------- | - | --------- | --------- | -- | -------- | -------- | --- | - |
+| Research Experience  |   |           |           |    |          |          |     |   |
+| Undergraduate GPA    |   |           |           |    |          |          |     |   |
+| GRE Scores           |   |           |           |    |          |          |     |   |
+| TOEFL Scores         |   |           |           |    |          |          |     |   |
 
 2.  Interpret the values above.
 
@@ -98,16 +98,16 @@ When interpreting \(b_{0}\) for *categorical* explanatory variables,
 describe what is the expected outcome for those who have a predicted
 score of 0.
 
-| Explanatory Variable | Term      | Interpretation                                                                                                                                                                                                                           |
-| -------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Research Experience  | r         | More experience is positively associated with a higher chance of admit. This value shows us that an increment of 0.55 standard deviations of Chance of Admit should be added on for every one standard deviation of Research Experience. |
-|                      | \[b_{0}\] | Research experience is expected to have an outcome of 0.64 for students who have a predicted score of 0.                                                                                                                                 |
-|                      | \[b_{1}\] | Our outcome variable, Research Experience, is expected to increase. An increment of 0.16 to add on for each unit of Research experience.                                                                                                 |
-|                      | PRE       | This is the proportion of error explained by the Research model compared to the empty model (0.31).                                                                                                                                      |
-| GRE Scores           | r         | Higher GRE Scores is positively associated with a higher chance of admit. This value shows us that an increment of 0.80 standard deviations of Chance of Admit should be added on for every one standard deviation of GRE Score.         |
-|                      | \[b_{0}\] | GRE Scores is expected to have an outcome of -2.44 for students who have a predicted score of 0.                                                                                                                                         |
-|                      | \[b_{1}\] | Our outcome variable, GRE Score, is expected to increase An increment of 0.01 to add on for each unit of GRE Score.                                                                                                                      |
-|                      | PRE       | This is the proportion of error explained by the GRE model compared to the empty model (0.64).                                                                                                                                           |
+| Explanatory Variable | Term      | Interpretation |
+| -------------------- | --------- | -------------- |
+| Research Experience  | r         |                |
+|                      | \[b_{0}\] |                |
+|                      | \[b_{1}\] |                |
+|                      | PRE       |                |
+| GRE Scores           | r         |                |
+|                      | \[b_{0}\] |                |
+|                      | \[b_{1}\] |                |
+|                      | PRE       |                |
 
 3.  Which model is the best, according to PRE? Why?
 
@@ -121,10 +121,10 @@ score of 0.
 
 | Explanatory Variable | Respondent \#40 | Respondent \#56 | Respondent \#78 | Respondent \#93 |
 | -------------------- | --------------- | --------------- | --------------- | --------------- |
-| Research Experience  | 0.64            | 0.64            | 0.64            | 0.64            |
-| Undergraduate GPA    | 0.54            | 0.54            | 0.65            | 0.61            |
-| GRE Scores           | 0.63            | 0.76            | 0.57            | 0.54            |
-| TOEFL Scores         | 0.74            | 0.64            | 0.57            | 0.55            |
+| Research Experience  |                 |                 |                 |                 |
+| Undergraduate GPA    |                 |                 |                 |                 |
+| GRE Scores           |                 |                 |                 |                 |
+| TOEFL Scores         |                 |                 |                 |                 |
 
 7.  For the best model that predicts the outcome variable per df used
     (see Q5), edit the following equation (see GLM notation) with
