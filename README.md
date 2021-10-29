@@ -8,16 +8,15 @@ If you have any questions, liked what you saw, have any work opportunities, or j
 ## Data Analysis Projects 
 
 ### Python
-- [Diamond Characteristics](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Diamond%20Characteristics): A principal component analysis (PCA), Generalized Linear Model (GLM), and linear model was created. PCA reduced the dimensionality of diamond characteristics, while keeping a high percentage of explained variance. GLM and a linear model was compared to understand which model performs better. 
+- [Diamond Characteristics](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Diamond%20Characteristics/General%20Linear%20Model%20(GLM)%20and%20Linear%20Model): A Generalized Linear Model (GLM) and a linear model was compared to understand which model performs better at investigating the association of diamond price after controlling for carat.
 - [Vehicle Characteristics](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Vehicle%20Characteristics): 428 vehicles were investigated to create a bi-variate and a multiple regression model to understand how other vehicle characteristics affect miles per gallon (MPG).
 - [Boston House Price Prediction](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Boston%20House%20Price%20Prediction): A linear and robust regression model was created to predict the median value of homes in the Boston area. 
-- [Wine Characteristics Dataset](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Wine%20Characteristics%20Dataset): A principal component analysis (PCA) was conducted on a dataset related to wine characteristics. The objective was to reduce the dimensionality of the dataset to 4 components. 
 - [Berkeley Guidance Study](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Berkeley%20Guidance%20Study): A multiple regression model was created to explain a longitudinal study of children in Berkeley, CA. R-squared, ANOVA, and F-test was computed to assess performance. 
 - [Survey of Labor and Income Dynamics (SLID)](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Survey%20of%20Labour%20and%20Income%20Dynamics%20(SLID)): A regression model was created to understand the wage dynamics in Canada. ANOVA was used to describe the overall performance. 
 - [Heart Disease Study](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Heart%20Disease%20Study): An analysis to identify trends in heart data to predict certain cardiovascular events or find any clear indications of heart health.
 - [United Nations Study - Fertility](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/United%20Nations%20Study%20-%20Fertility): The data was collected from a 2011 United Nations study. A multiple regression model was created to explain the dependence of fertility on ppgdp.
 
-*Skills: Pandas, NumPy, sklearn, matplotlib, Analysis of Variance (ANOVA), bi-linear regression, multiple regression, t-test, principal component analysis (PCA), Generalized Linear Model (GLM)*
+*Skills: Pandas, NumPy, sklearn, matplotlib, Analysis of Variance (ANOVA), bi-linear regression, multiple regression, t-test, Generalized Linear Model (GLM)*
 
 ### SAS
 - [2018 Behavioral Risk Factor Surveillance System (BRFSS)](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/2018%20Behavioral%20Risk%20Factor%20Surveillance%20System%20(BRFSS)): This BRFSS dataset is by the Centers for Disease Control and Prevention (CDC) and included 360,665 participants. The purpose for this analysis was to assess if the generational age group that people are born in have a relationship with increased levels of poor mental health, after controlling sex, race, and income. The results show there is a relationship between generational age group and poor mental health. As generational age groups become more current, it is more likely that poor mental health is present. 
@@ -46,6 +45,12 @@ If you have any questions, liked what you saw, have any work opportunities, or j
 - [IBM HR Analytics Employee Attrition & Performance](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/IBM%20HR%20Analytics%20Employee%20-%20Python): An analysis was conducted on employee attrition and performance data using machine learning and ensemble methods. The objective was to determine which model performs best at predicting employee attrition. The following methods were trained and tested: Decision tree, random forest, bagging, AdaBoost, AdaBoost+RandomForest, gradient boosting classifier, and XGBoost. 
 
 *Skills: Sklearn, natural language processing (NLP), train-validate-test split, ensemble methods, GridSearchCV, term frequency-inverse document frequency (TF-IDF), stop word removal, tokenization, stemming*
+
+## Dimensionality Reduction Projects
+- [Diamond Characteristics](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Diamond%20Characteristics/Principal%20Component%20Analysis%20(PCA)): A principal component analysis (PCA), Generalized Linear Model (GLM), and linear model was created. PCA reduced the dimensionality of diamond characteristics, while keeping a high percentage of explained variance. A GLM and a linear model was compared to understand which model performs better at investigating the association of diamond price after controlling for carat.
+- [Wine Characteristics Dataset](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Wine%20Characteristics%20Dataset): A principal component analysis (PCA) was conducted on a dataset related to wine characteristics. The objective was to reduce the dimensionality of the dataset to 4 components. 
+
+*Skills: Principal component analysis (PCA), *
 
 ## Data Audit Reports
 - [AnyState Veterans of Foreign Wars](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/AnyState%20Veterans%20of%20Foreign%20Wars/Data%20Audit%20Report): A data audit report was created for AnyState Veterans of Foreign Wars. To improve the effectiveness of AnyState's solicitation campaigns, a predictive model will be built and score their marketing database. This data audit report is the first step to audit the data to support this model building effort. 
