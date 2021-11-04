@@ -5,6 +5,13 @@ If you have any questions, liked what you saw, have any work opportunities, or j
 
 *Note: Data used in the projects is for demonstration purposes only*
 
+## Machine Learning Projects
+- [Defeating Fake News using NLP and Machine Learning Methods](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Defeating%20Fake%20News%20using%20NLP%20and%20Machine%20Learning%20Methods): In a digital age where people are connected through technology, our worldview is shaped by the information we see, read, and hear. The objective for this study was to create a predictive model that explores textual properties to classify news articles as fake or fact. The first model (Model 1) investigated only the news headline and the second model (Model 2) investigated the news headline and the body of the article as features. 
+- [Breast Cancer Wisconsin Study](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Breast%20Cancer%20Wisconsin%20-%20Python): This dataset included breast cancer characteristics from a digitized image of a fine needle aspirate (FNA) of a breast mass. K-nearest neighbors (KNN), support vector machine (SVM), and random forest (RF) was trained, hypertuned, and tested to determine if it performs well at predicting malignant tumors.
+- [IBM HR Analytics Employee Attrition & Performance](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/IBM%20HR%20Analytics%20Employee%20-%20Python): An analysis was conducted on employee attrition and performance data using machine learning and ensemble methods. The objective was to determine which model performs best at predicting employee attrition. The following methods were trained and tested: Decision tree, random forest, bagging, AdaBoost, AdaBoost+RandomForest, gradient boosting classifier, and XGBoost. 
+
+*Skills: Sklearn, natural language processing (NLP), train-validate-test split, ensemble methods, GridSearchCV, term frequency-inverse document frequency (TF-IDF), stop word removal, tokenization, stemming*
+
 ## Data Analysis Projects 
 
 ### Python
@@ -38,13 +45,6 @@ If you have any questions, liked what you saw, have any work opportunities, or j
 - [Student Alcohol Consumption](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Student%20Alcohol%20Consumption): An analysis report for a client to understand the leading causes of student absences in math classes. The client hypothesizes that students who are in a romantic relationship (yes or no) will tend to have more absences. An explanatory model will be used to test this research question.
 
 *Skills: mosaic, dplyr, supernova, ggplot2, lsr, Analysis of Variance (ANOVA), null hypothesis testing, linear regression, confidence interval interpretations, standard error,  z-scores, data visualization*
-
-## Machine Learning Projects
-- [Defeating Fake News using NLP and Machine Learning Methods](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Defeating%20Fake%20News%20using%20NLP%20and%20Machine%20Learning%20Methods): In a digital age where people are connected through technology, our worldview is shaped by the information we see, read, and hear. The objective for this study was to create a predictive model that explores textual properties to classify news articles as fake or fact. The first model (Model 1) investigated only the news headline and the second model (Model 2) investigated the news headline and the body of the article as features. 
-- [Breast Cancer Wisconsin Study](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Breast%20Cancer%20Wisconsin%20-%20Python): This dataset included breast cancer characteristics from a digitized image of a fine needle aspirate (FNA) of a breast mass. K-nearest neighbors (KNN), support vector machine (SVM), and random forest (RF) was trained, hypertuned, and tested to determine if it performs well at predicting malignant tumors.
-- [IBM HR Analytics Employee Attrition & Performance](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/IBM%20HR%20Analytics%20Employee%20-%20Python): An analysis was conducted on employee attrition and performance data using machine learning and ensemble methods. The objective was to determine which model performs best at predicting employee attrition. The following methods were trained and tested: Decision tree, random forest, bagging, AdaBoost, AdaBoost+RandomForest, gradient boosting classifier, and XGBoost. 
-
-*Skills: Sklearn, natural language processing (NLP), train-validate-test split, ensemble methods, GridSearchCV, term frequency-inverse document frequency (TF-IDF), stop word removal, tokenization, stemming*
 
 ## Dimensionality Reduction Projects
 - [Diamond Characteristics](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Diamond%20Characteristics/Principal%20Component%20Analysis): A principal component analysis (PCA), Generalized Linear Model (GLM), and linear model was created. PCA reduced the dimensionality of diamond characteristics, while keeping a high percentage of explained variance. A GLM and a linear model was compared to understand which model performs better at investigating the association of diamond price after controlling for carat.
