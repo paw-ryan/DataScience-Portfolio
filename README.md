@@ -3,7 +3,6 @@ Welcome to my Data Science Portfolio! This repository contains an accumulation o
 
 If you have any questions, liked what you saw, have any work opportunities, or just want to chat feel free to reach out to me at: paw.ryan@gmail.com. 
 
-*Note: Data used in the projects is for demonstration purposes only*
 
 ## Machine Learning Projects
 - [Defeating Fake News using NLP and Machine Learning Methods](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Defeating%20Fake%20News%20using%20NLP%20and%20Machine%20Learning%20Methods): In a digital age where people are connected through technology, our worldview is shaped by the information we see, read, and hear. The objective for this study was to create a predictive model that explores textual properties to classify news articles as fake or fact. The first model (Model 1) investigated only the news headline and the second model (Model 2) investigated the news headline and the body of the article as features. 
