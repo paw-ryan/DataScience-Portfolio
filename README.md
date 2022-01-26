@@ -45,6 +45,11 @@ If you have any questions, liked what you saw, have any work opportunities, or j
 
 *Skills: mosaic, dplyr, supernova, ggplot2, lsr, Analysis of Variance (ANOVA), null hypothesis testing, linear regression, confidence interval interpretations, standard error,  z-scores, data visualization*
 
+### Excel
+- [Analyzing Access to Patient Care](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Analyzing%20Access%20to%20Patient%20Care): An analysis and presentation to measure the number of appointments available to patients and to measure a patient's experience related to appointments.
+
+*Skills: Pearson's correlation coefficient, Analysis of Variance (ANOVA), null hypothesis testing, linear regression, confidence interval interpretations, standard error, data visualization*
+
 ## Dimensionality Reduction Projects
 - [Diamond Characteristics](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Diamond%20Characteristics/Principal%20Component%20Analysis): A principal component analysis (PCA), Generalized Linear Model (GLM), and linear model was created. PCA reduced the dimensionality of diamond characteristics, while keeping a high percentage of explained variance. A GLM and a linear model was compared to understand which model performs better at investigating the association of diamond price after controlling for carat.
 - [Wine Characteristics Dataset](https://github.com/paw-ryan/DataScience-Portfolio/tree/main/Wine%20Characteristics%20Dataset): A principal component analysis (PCA) was conducted on a dataset related to wine characteristics. The objective was to reduce the dimensionality of the dataset to 4 components. 
